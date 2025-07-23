@@ -1,8 +1,7 @@
 package academy.devdojo.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import academy.devdojo.domain.Anime;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -11,10 +10,24 @@ import java.util.List;
 @RequestMapping(path = {"v1/animes", "v1/animes/"})
 public class AnimeController {
 
-    private List<String> ANIMES = Arrays.asList("Jader", "Debora");
-
     @GetMapping()
-    public List<String> getAnimes() {
-        return List.of("Hell's Paradise(Jigokuraku)", "Dr. Stone", "Konosuba");
+    public List<Anime> getAnimes() {
+        return Anime.getAnimes();
+    }
+
+    @GetMapping("findByName")
+    public List<Anime> findByName(@RequestParam(required = false) String name) {
+        var animes = Anime.getAnimes();
+        if (name == null || name == "") return animes;
+        return Anime.getAnimes().stream().filter(anime -> anime.getName().equalsIgnoreCase(name)).toList();
+    }
+
+    @GetMapping("{id}")
+    public Anime findById(@PathVariable Long id) {
+        return Anime.getAnimes()
+                .stream()
+                .filter(anime -> anime.getId().equals(id))
+                .findFirst()
+                .orElse(null);
     }
 }
