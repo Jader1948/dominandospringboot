@@ -9,7 +9,7 @@ import lombok.ToString;
 @Setter
 @Builder
 @ToString
-public class ProducerPostResponse {
+public class AnimeGetResponse {
     private Long id;
     private String name;
 }

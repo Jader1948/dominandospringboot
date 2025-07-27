@@ -1,7 +1,6 @@
 package academy.devdojo.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,7 +15,7 @@ import java.util.List;
 public class Producer {
 
     private Long id;
-    @JsonProperty(value="name")//propiedade para usar nome diferente da variavel na requisição
+    @JsonProperty(value = "name")//propiedade para usar nome diferente da variavel na requisição
     private String name;
     private LocalDateTime createAt;
     @Getter

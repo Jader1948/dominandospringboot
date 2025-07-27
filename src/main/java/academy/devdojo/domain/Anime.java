@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +12,11 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
+@ToString
 public class Anime {
 
     private Long id;
-    @JsonProperty(value="name")//propiedade para usar nome diferente da variavel na requisição
+    @JsonProperty(value = "name")//propiedade para usar nome diferente da variavel na requisição
     private String name;
     private static List<Anime> ANIMES = new ArrayList<>();
 
@@ -27,7 +29,7 @@ public class Anime {
         ANIMES.addAll(List.of(jigokuraku, konosuba, drStone, jaderM, deboraM));
     }
 
-    public static List<Anime> getAnimes(){
+    public static List<Anime> getAnimes() {
         return ANIMES;
     }
 }
