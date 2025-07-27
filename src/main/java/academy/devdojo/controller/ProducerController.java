@@ -1,7 +1,9 @@
 package academy.devdojo.controller;
 
 import academy.devdojo.domain.Producer;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,11 +19,13 @@ public class ProducerController {
     // e consumir e entregar, por exemplo XML ou qualquer outro formato de arquivo.
     // header server para forçar o cliente consumindo, precisar a colocar a versao da api,  um padrao e começar com x-api-version=v1
     // que é totalmente customisavel,
+    // No caso de nao querer retornar nada, no lugar de Producer irá o void e no retorno, noContent.build
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE,
             headers = "x-api-version=v1")
-    public Producer save(@RequestBody Producer producer) {
+    public ResponseEntity<Producer> save(@RequestBody Producer producer) {
         producer.setId(ThreadLocalRandom.current().nextLong(100_000));
         Producer.getProducers().add(producer);
-        return producer;
+        return ResponseEntity.status(HttpStatus.CREATED).body(producer);
     }
+
 }
