@@ -3,6 +3,7 @@ package academy.devdojo.controller;
 import academy.devdojo.domain.Producer;
 import academy.devdojo.mapper.ProducerMapper;
 import academy.devdojo.request.ProducerPostRequest;
+import academy.devdojo.request.ProducerPutRequest;
 import academy.devdojo.response.ProducerGetResponse;
 import academy.devdojo.response.ProducerPostResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -60,6 +61,20 @@ public class ProducerController {
                 .findFirst()
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producer not found to be delete"));
         Producer.getProducers().remove(producerToBeDelete);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping
+    public ResponseEntity<Void> update(@RequestBody ProducerPutRequest request) {
+        log.info("Request received to updated the producer '{}'", request);
+        var producerToRemove = Producer.getProducers()
+                .stream()
+                .filter(producer -> producer.getId().equals(request.getId()))
+                .findFirst()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Procuder not found to be updaded"));
+        var producerUpdated = MAPPER.toProducerPutRequest(request, producerToRemove.getCreateAt());
+        Producer.getProducers().remove(producerToRemove);
+        Producer.getProducers().add(producerUpdated);
         return ResponseEntity.noContent().build();
     }
 }
