@@ -1,8 +1,11 @@
 package academy.devdojo.controller;
 
 import academy.devdojo.domain.Anime;
+import academy.devdojo.domain.Producer;
 import academy.devdojo.mapper.AnimeMapper;
 import academy.devdojo.request.AnimePostRequest;
+import academy.devdojo.request.AnimePutRequest;
+import academy.devdojo.request.ProducerPutRequest;
 import academy.devdojo.response.AnimeGetResponse;
 import academy.devdojo.response.AnimePostResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -66,6 +69,20 @@ public class AnimeController {
                 .findFirst()
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Anime not found to be delete"));
         Anime.getAnimes().remove(animeToBeDelete);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping
+    public ResponseEntity<Void> update(@RequestBody AnimePutRequest request) {
+        log.info("Request received to updated the producer '{}'", request);
+        var animeToRemove = Producer.getProducers()
+                .stream()
+                .filter(anime -> anime.getId().equals(request.getId()))
+                .findFirst()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Procuder not found to be updaded"));
+        var animeUpdated = MAPPER.toAnimePutRequest(request);
+        Anime.getAnimes().remove(animeToRemove);
+        Anime.getAnimes().add(animeUpdated);
         return ResponseEntity.noContent().build();
     }
 }
