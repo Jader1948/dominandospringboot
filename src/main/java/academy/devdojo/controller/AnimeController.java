@@ -1,6 +1,7 @@
 package academy.devdojo.controller;
 
 import academy.devdojo.domain.Anime;
+import academy.devdojo.domain.Producer;
 import academy.devdojo.mapper.AnimeMapper;
 import academy.devdojo.request.AnimePostRequest;
 import academy.devdojo.response.AnimeGetResponse;
@@ -62,5 +63,17 @@ public class AnimeController {
         var response = MAPPER.toAnimePostResponse(anime);
         Anime.getAnimes().add(anime);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        log.info("Request received to delete the anime by id '{}'", id);
+        var animeToBeDelete = Anime.getAnimes()
+                .stream()
+                .filter(anime -> anime.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Anime not found to be delete"));
+        Anime.getAnimes().remove(animeToBeDelete);
+        return ResponseEntity.noContent().build();
     }
 }
