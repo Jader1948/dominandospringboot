@@ -1,7 +1,6 @@
 package academy.devdojo.controller;
 
 import academy.devdojo.domain.Anime;
-import academy.devdojo.domain.Producer;
 import academy.devdojo.mapper.AnimeMapper;
 import academy.devdojo.request.AnimePostRequest;
 import academy.devdojo.response.AnimeGetResponse;
@@ -35,21 +34,14 @@ public class AnimeController {
         var animes = Anime.getAnimes();
         var animesGetResponses = MAPPER.toAnimeGetResposes(animes);
         if (name == null || name == "") return ResponseEntity.ok(animesGetResponses);
-        animesGetResponses = animesGetResponses
-                .stream()
-                .filter(anime -> anime.getName().equalsIgnoreCase(name))
-                .toList();
+        animesGetResponses = animesGetResponses.stream().filter(anime -> anime.getName().equalsIgnoreCase(name)).toList();
         return ResponseEntity.ok(animesGetResponses);
     }
 
     @GetMapping("{id}")
     public ResponseEntity<AnimeGetResponse> findById(@PathVariable Long id) {
         log.info("Request received find anime by id '{}'", id);
-        var animeFound = Anime.getAnimes()
-                .stream()
-                .filter(anime -> anime.getId().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Anime not found"));
+        var animeFound = Anime.getAnimes().stream().filter(anime -> anime.getId().equals(id)).findFirst().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Anime not found"));
         var response = MAPPER.toAnimeGetResponse(animeFound);
         return ResponseEntity.ok(response);
     }
