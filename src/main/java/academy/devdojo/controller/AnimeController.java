@@ -1,11 +1,9 @@
 package academy.devdojo.controller;
 
 import academy.devdojo.domain.Anime;
-import academy.devdojo.domain.Producer;
 import academy.devdojo.mapper.AnimeMapper;
 import academy.devdojo.request.AnimePostRequest;
 import academy.devdojo.request.AnimePutRequest;
-import academy.devdojo.request.ProducerPutRequest;
 import academy.devdojo.response.AnimeGetResponse;
 import academy.devdojo.response.AnimePostResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -75,7 +73,7 @@ public class AnimeController {
     @PutMapping
     public ResponseEntity<Void> update(@RequestBody AnimePutRequest request) {
         log.info("Request received to updated the producer '{}'", request);
-        var animeToRemove = Producer.getProducers()
+        var animeToRemove = Anime.getAnimes()
                 .stream()
                 .filter(anime -> anime.getId().equals(request.getId()))
                 .findFirst()
