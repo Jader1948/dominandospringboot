@@ -7,6 +7,7 @@ import academy.devdojo.response.AnimeGetResponse;
 import academy.devdojo.response.AnimePostResponse;
 import academy.devdojo.service.AnimeService;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,14 +18,12 @@ import java.util.List;
 @RestController
 @RequestMapping(path = {"v1/animes", "v1/animes/"})
 @Log4j2
+@RequiredArgsConstructor
 public class AnimeController {
 
     private static final AnimeMapper MAPPER = AnimeMapper.INSTANCE;
-    private AnimeService service;
+    private final AnimeService service;
 
-    public AnimeController() {
-        this.service = new AnimeService();
-    }
 
     @GetMapping()
     public ResponseEntity<List<AnimeGetResponse>> getAnimes() {
