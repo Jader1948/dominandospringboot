@@ -22,7 +22,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProducerController {
 
-    private static final ProducerMapper MAPPER = ProducerMapper.INSTANCE;
+    private final ProducerMapper MAPPER;
     private final ProducerService service;
 
 
