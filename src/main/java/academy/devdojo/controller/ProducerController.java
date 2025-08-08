@@ -7,6 +7,7 @@ import academy.devdojo.response.ProducerGetResponse;
 import academy.devdojo.response.ProducerPostResponse;
 import academy.devdojo.service.ProducerService;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,14 +19,12 @@ import java.util.List;
 @RestController
 @RequestMapping(path = {"v1/producers", "v1/producers/"})
 @Log4j2
+@RequiredArgsConstructor
 public class ProducerController {
 
-    private static final ProducerMapper MAPPER = ProducerMapper.INSTANCE;
-    private ProducerService service;
+    private final ProducerMapper MAPPER;
+    private final ProducerService service;
 
-    public ProducerController() {
-        this.service = new ProducerService();
-    }
 
     // se quiser forçar o formato diferente da requisição voce pode usar o produces e  consumes para que formato
     // e consumir e entregar, por exemplo XML ou qualquer outro formato de arquivo.
