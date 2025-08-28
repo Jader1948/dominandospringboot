@@ -16,7 +16,7 @@ public class AnimeService {
     private final AnimeHardCodedRepository repository;
 
     public List<Anime> listAll() {
-        return repository.listAll();
+        return repository.findAll();
     }
 
     public List<Anime> findByName(String name) {

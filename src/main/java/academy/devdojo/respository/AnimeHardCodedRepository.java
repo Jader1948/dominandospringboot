@@ -1,50 +1,41 @@
 package academy.devdojo.respository;
 
 import academy.devdojo.domain.Anime;
-import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
+@RequiredArgsConstructor
 public class AnimeHardCodedRepository {
 
 
-    @Getter
-    private static List<Anime> ANIMES = new ArrayList<>();
+    private final AnimeData animeData;
 
-    static {
-        var jigokuraku = Anime.builder().id(1L).name("Jigokuraku").build();
-        var konosuba = Anime.builder().id(2L).name("Jonosuba").build();
-        var drStone = Anime.builder().id(3L).name("Dr. Stone").build();
-        var jaderM = Anime.builder().id(4L).name( "JaderM").build();
-        var deboraM = Anime.builder().id(5L).name("DeboraM").build();
-        ANIMES.addAll(List.of(jigokuraku, konosuba, drStone, jaderM, deboraM));
-    }
-
-    public List<Anime> listAll(){
-        return ANIMES;
+    public List<Anime> findAll() {
+        return animeData.getAnimes();
     }
 
     public List<Anime> findByName(String name) {
-        return ANIMES.stream()
-                .filter(anime -> anime.getName().equalsIgnoreCase(name))
-                .toList();
+        return name == null ? animeData.getAnimes() :
+                animeData.getAnimes().stream()
+                        .filter(anime -> anime.getName().equalsIgnoreCase(name))
+                        .toList();
     }
 
     public Optional<Anime> findById(Long id) {
-        return ANIMES.stream().filter(anime -> anime.getId().equals(id)).findFirst();
+        return animeData.getAnimes().stream().filter(anime -> anime.getId().equals(id)).findFirst();
     }
 
     public Anime save(Anime anime) {
-        ANIMES.add(anime);
+        animeData.getAnimes().add(anime);
         return anime;
     }
 
     public void delete(Anime anime) {
-        ANIMES.remove(anime);
+        animeData.getAnimes().remove(anime);
     }
 
     public void update(Anime anime) {

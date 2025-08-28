@@ -100,7 +100,6 @@ class ProducerHardCodedRepositoryTest {
         Assertions.assertThat(this.producers).doesNotContain(producerToDelete);
     }
     @Test
-    @DisplayName("update() updates a producer")
     @Order(8)
     void update_UpdatesProducer_WhenSuccessfull() {
         var producerToUpdate = this.producers.get(0);
