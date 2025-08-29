@@ -17,7 +17,7 @@ public class ProducerService {
 
     private final ProducerHardCodedRepository repository;
 
-    public List<Producer> listAll() {
+    public List<Producer> findAll() {
         return repository.findAll();
     }
 
