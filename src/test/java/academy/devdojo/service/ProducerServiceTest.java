@@ -153,7 +153,7 @@ class ProducerServiceTest {
     }
 
     @Test
-    @DisplayName("update() removes throw ResponseStatusException when no producer is found")
+    @DisplayName("update()  throw ResponseStatusException when no producer is found")
     @Order(11)
     void update_ThrowsResponseStatusException_WhenNoProducerIsFound() {
         var id = 1L;
@@ -161,7 +161,7 @@ class ProducerServiceTest {
         producerToUpdate.setName("Aniplex");
         BDDMockito.when(repository.findById(id)).thenReturn(Optional.empty());
         Assertions.assertThatException()
-                .isThrownBy(()-> service.delete(id))
+                .isThrownBy(()-> service.update(producerToUpdate))
                 .isInstanceOf(ResponseStatusException.class);
 
     }
