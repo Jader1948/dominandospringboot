@@ -12,7 +12,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -28,10 +27,10 @@ class ProducerServiceTest {
     @Mock
     private ProducerHardCodedRepository repository;
 
-    private List<Producer> producers =  new ArrayList<>();
+    private List<Producer> producers = new ArrayList<>();
 
     @BeforeEach
-    void init(){
+    void init() {
         var ufotable = Producer.builder().id(1L).name("Ufotable").createAt(LocalDateTime.now()).build();
         var witStudio = Producer.builder().id(2L).name("Wit Studio").createAt(LocalDateTime.now()).build();
         var studioGibli = Producer.builder().id(3L).name("Studio Gibli").createAt(LocalDateTime.now()).build();
@@ -77,6 +76,8 @@ class ProducerServiceTest {
         var producers = service.findAll(name);
         Assertions.assertThat(producers).isNotNull().isEmpty();
     }
+
+
 
 
 }
